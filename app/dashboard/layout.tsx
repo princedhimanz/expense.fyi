@@ -17,8 +17,6 @@ import { Database } from 'lib/database.types';
 
 import url from 'constants/url';
 
-const GOOGLE_ANALYTICS_ID = process.env.GA4_ANALYTICS_ID;
-
 const inter = Inter({ subsets: ['latin'] });
 
 const supabaseOption = {
@@ -74,19 +72,6 @@ export default async function Layout({ children }: any) {
 						<Toaster closeButton position="top-right" theme="system" visibleToasts={3} richColors />
 					</AuthProvider>
 				</body>
-				<Script
-					src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
-					strategy="afterInteractive"
-				/>
-				<Script id="ga4" strategy="afterInteractive">
-					{`
-						window.dataLayer = window.dataLayer || [];
-						function gtag(){dataLayer.push(arguments);}
-						gtag('js', new Date());
-
-						gtag('config', '${GOOGLE_ANALYTICS_ID}');
-					`}
-				</Script>
 			</html>
 		</>
 	);
