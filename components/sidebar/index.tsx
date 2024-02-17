@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
+import { useClerk } from '@clerk/nextjs';
 import SvgWhiteLogo from 'public/icons/white-logo.svg';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -25,7 +26,6 @@ import { cn } from 'lib/utils';
 import shortcuts from 'constants/shortcuts';
 
 import SidebarLink from './link';
-import { useClerk } from '@clerk/nextjs';
 
 const dashboardLinks = [
 	{ name: 'Overview', href: '/', Icon: OverviewIcon, shortcutText: shortcuts.menu.overview.shortcut },
@@ -60,7 +60,7 @@ export default function Sidebar() {
 	const pathname = usePathname();
 	const router = useRouter();
 	const { show, setShow } = useSidebar();
-	 const { signOut } = useClerk();
+	const { signOut } = useClerk();
 
 	useHotkeys(
 		menuShortcutList,
@@ -135,7 +135,7 @@ export default function Sidebar() {
 							})}
 							<button
 								className={`mt-2 flex h-[40px] w-full items-center justify-center rounded-lg p-2 text-base tracking-wide text-white hover:bg-[#27272a]`}
-								onClick={signOut}
+								onClick={() => signOut()}
 								title="Sign out"
 							>
 								<div className="flex items-center">
