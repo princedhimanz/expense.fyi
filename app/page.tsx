@@ -15,8 +15,8 @@ export default function Home() {
 			<header className="relative m-auto h-[56px] max-w-4xl pt-3">
 				<div className="absolute left-0 right-0 top-3 z-20 flex items-center justify-between">
 					<Link href={'/'} className="flex max-w-[180px] items-center p-3 text-2xl">
-						<Image src={logo} width={30} height={30} alt="expense.fyi logo" className="mr-2" />
-						<span className="font-black tracking-[-0.03em] text-gray-900">Expense.fyi</span>
+						<Image src={logo} width={30} height={30} alt="logo" className="mr-2" />
+						<span className="font-black tracking-[-0.03em] text-gray-900">Expense Manger</span>
 					</Link>
 					<Link
 						href={url.app.signin}

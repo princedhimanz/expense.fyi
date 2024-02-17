@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import SvgWhiteLogo from 'public/icons/white-logo.svg';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -26,6 +25,7 @@ import { cn } from 'lib/utils';
 import shortcuts from 'constants/shortcuts';
 
 import SidebarLink from './link';
+import { useClerk } from '@clerk/nextjs';
 
 const dashboardLinks = [
 	{ name: 'Overview', href: '/', Icon: OverviewIcon, shortcutText: shortcuts.menu.overview.shortcut },
@@ -59,8 +59,8 @@ const options = {
 export default function Sidebar() {
 	const pathname = usePathname();
 	const router = useRouter();
-	const supabase = createClientComponentClient();
 	const { show, setShow } = useSidebar();
+	 const { signOut } = useClerk();
 
 	useHotkeys(
 		menuShortcutList,
@@ -75,10 +75,10 @@ export default function Sidebar() {
 		options
 	);
 
-	async function signOut() {
-		await supabase.auth.signOut();
-		window.location.href = '/signin';
-	}
+	// async function signOut() {
+	// 	await supabase.auth.signOut();
+	// 	window.location.href = '/signin';
+	// }
 
 	return (
 		<>

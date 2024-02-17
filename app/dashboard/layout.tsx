@@ -2,8 +2,12 @@ import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 import Script from 'next/script';
 
+
+
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import NextTopLoader from 'nextjs-toploader';
+
+
 
 import { AuthProvider } from 'components/context/auth-provider';
 import { SidebarContextProvider } from 'components/context/sidebar-provider';
@@ -12,17 +16,20 @@ import DashboardLayout from 'components/layout';
 import Sidebar from 'components/sidebar';
 import { Toaster } from 'components/ui/sonner';
 
+
+
 import { apiUrls } from 'lib/apiUrls';
 import { Database } from 'lib/database.types';
 
+
+
 import url from 'constants/url';
+import { currentUser } from '@clerk/nextjs';
+import { getUser } from 'lib/auth';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
-const supabaseOption = {
-	supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-	supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-};
 
 const title = 'Expense.fyi – Overview';
 const description = 'Effortlessly Track and Manage Expenses.';
@@ -34,29 +41,21 @@ export const metadata = {
 
 export const revalidate = 0;
 
-async function getUser(cookies: any) {
-	const res = await fetch(`${url.serverApi}/${apiUrls.user.modify}`, {
-		headers: { cookie: cookies },
-	});
-	if (!res.ok) {
-		return {};
-	}
-	return await res.json();
-}
 
 export default async function Layout({ children }: any) {
-	const supabase = createServerComponentClient<Database>({ cookies }, supabaseOption);
-	const {
-		data: { session },
-	} = await supabase.auth.getSession();
-	const user = await getUser(cookies());
+	// const supabase = createServerComponentClient<Database>({ cookies }, supabaseOption);
+	// const {
+	// 	data: { session },
+	// } = await supabase.auth.getSession();
+	const user = await getUser();
+	// console.log(user)
 
 	return (
 		<>
 			<html lang="en" suppressHydrationWarning>
 				<body className={`${inter.className} flex h-full flex-col text-gray-600 antialiased`}>
 					<NextTopLoader color="#0076ff" height={2} showSpinner={false} />
-					<AuthProvider user={user} accessToken={session?.access_token || null}>
+					<AuthProvider user={user} >
 						<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 							<main className="relative flex min-h-full min-w-full bg-background">
 								<DashboardLayout>

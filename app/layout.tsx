@@ -1,6 +1,7 @@
 import { Viewport } from 'next';
 import { Inter } from 'next/font/google';
-import Script from 'next/script';
+
+import { ClerkProvider } from '@clerk/nextjs';
 
 import './globals.css';
 import './overwrites.css';
@@ -51,8 +52,10 @@ export const revalidate = 0;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
-			<body className={`${inter.className} flex h-full flex-col text-gray-600 antialiased`}>{children}</body>
-		</html>
+		<ClerkProvider>
+			<html lang="en">
+				<body className={`${inter.className} flex h-full flex-col text-gray-600 antialiased`}>{children}</body>
+			</html>
+		</ClerkProvider>
 	);
 }

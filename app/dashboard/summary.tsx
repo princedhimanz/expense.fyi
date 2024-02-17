@@ -37,7 +37,7 @@ export default function Summary() {
 
 	const totalExpenses = data.expenses.reduce((acc: any, { price }: any) => Number(price) + acc, 0);
 	const totalIncome = data.income.reduce((acc: any, { price }: any) => Number(price) + acc, 0);
-	const totalInvesments = data.investments.reduce(
+	const totalInvestments = data.investments.reduce(
 		(acc: any, { price, units }: any) => Number(price) * Number(units) + acc,
 		0
 	);
@@ -45,7 +45,7 @@ export default function Summary() {
 		(acc: any, { price, paid_dates }: any) => Number(price) * paid_dates.length + acc,
 		0
 	);
-	const totalSpent = totalExpenses + totalInvesments + totalSubscriptions;
+	const totalSpent = totalExpenses + totalInvestments + totalSubscriptions;
 	const totalBalance = totalIncome - totalSpent;
 
 	return (
@@ -74,7 +74,7 @@ export default function Summary() {
 					<SummaryCard
 						icon={PiggyBank}
 						title="total investment"
-						data={formatCurrency({ value: totalInvesments, currency: user.currency, locale: user.locale })}
+						data={formatCurrency({ value: totalInvestments, currency: user.currency, locale: user.locale })}
 					/>
 					<SummaryCard
 						icon={PlayIcon}
